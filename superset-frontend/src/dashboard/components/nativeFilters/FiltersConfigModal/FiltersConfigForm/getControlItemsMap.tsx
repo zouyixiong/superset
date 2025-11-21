@@ -93,6 +93,8 @@ export default function getControlItemsMap({
         filterToEdit?.controlValues?.[mainControlItem.name] ??
         mainControlItem?.config?.default;
       const initColumn = filterToEdit?.targets[0]?.column?.name;
+      const initDisplayColumn =
+        filterToEdit?.targets[0]?.column?.displayName || initColumn;
 
       const element = (
         <>
@@ -118,6 +120,46 @@ export default function getControlItemsMap({
               {
                 required: mainControlItem.config?.required && !removed, // TODO: need to move ColumnSelect settings to controlPanel for all filters
                 message: t('Column is required'),
+              },
+            ]}
+            data-test="field-input"
+          >
+            <ColumnSelect
+              mode={mainControlItem.config?.multiple && 'multiple'}
+              form={form}
+              filterId={filterId}
+              datasetId={datasetId}
+              filterValues={column =>
+                doesColumnMatchFilterType(
+                  formFilter?.filterType || '',
+                  column,
+                ) && !!column?.filterable
+              }
+              onChange={() => {
+                // We need reset default value when column changed
+                setNativeFilterFieldValues(form, filterId, {
+                  defaultDataMask: null,
+                });
+                forceUpdate();
+                formChanged();
+              }}
+            />
+          </StyledFormItem>
+
+          <StyledFormItem
+            expanded={expanded}
+            // don't show the column select unless we have a dataset
+            name={['filters', filterId, 'displayColumn']}
+            initialValue={initDisplayColumn}
+            label={
+              <StyledLabel>
+                {mainControlItem.config?.displayLabel || t('Display Column')}
+              </StyledLabel>
+            }
+            rules={[
+              {
+                required: false, // TODO: need to move ColumnSelect settings to controlPanel for all filters
+                message: t('DisplayColumn is not required'),
               },
             ]}
             data-test="field-input"

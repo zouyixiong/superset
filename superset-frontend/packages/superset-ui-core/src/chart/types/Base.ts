@@ -65,6 +65,9 @@ export type DataMask = {
   extraFormData?: ExtraFormData;
   filterState?: FilterState;
   ownState?: JsonObject;
+
+  // 用于联动 charts 的 dataMask；为 undefined 时，使用上层 DataMask 自身
+  dataMaskForBind?: DataMask;
 };
 
 export type SetDataMaskHook = {

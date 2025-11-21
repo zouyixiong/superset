@@ -145,9 +145,15 @@ export function getExtraFormData(
 ): ExtraFormData {
   let extraFormData: ExtraFormData = {};
   filterIdsAppliedOnChart.forEach(key => {
+    // 检查是否存在 dataMaskForBind 并优先使用它
+    const filterDataMask = dataMask[key];
+    const filterDataMaskForChart = filterDataMask?.dataMaskForBind
+      ? { ...filterDataMask, ...filterDataMask.dataMaskForBind }
+      : filterDataMask;
+
     extraFormData = mergeExtraFormData(
       extraFormData,
-      dataMask[key]?.extraFormData ?? {},
+      filterDataMaskForChart?.extraFormData ?? {},
     );
   });
   return extraFormData;

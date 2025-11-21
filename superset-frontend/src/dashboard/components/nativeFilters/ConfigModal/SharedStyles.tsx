@@ -20,7 +20,7 @@ import { styled, css } from '@apache-superset/core/ui';
 import { Form, StyledModal } from '@superset-ui/core/components';
 
 const MODAL_MARGIN = 16;
-const MIN_WIDTH = 880;
+const MIN_WIDTH = 1100;
 
 export interface BaseModalWrapperProps {
   expanded: boolean;

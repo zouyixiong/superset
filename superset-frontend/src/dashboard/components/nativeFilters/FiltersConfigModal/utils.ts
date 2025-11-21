@@ -122,6 +122,9 @@ export const createHandleSave =
       }
       if (formInputs.dataset && formInputs.column) {
         target.column = { name: formInputs.column };
+        if (formInputs.displayColumn) {
+          target.column.displayName = formInputs.displayColumn;
+        }
       }
 
       return {

@@ -126,8 +126,11 @@ const FilterValue: FC<FilterControlProps> = ({
   const {
     datasetId,
     column = {},
-  }: Partial<{ datasetId: number; column: { name?: string } }> = target;
-  const { name: groupby } = column;
+  }: Partial<{
+    datasetId: number;
+    column: { name?: string; displayName?: string };
+  }> = target;
+  const { name: groupby, displayName } = column;
   const hasDataSource = !!datasetId;
   const [isLoading, setIsLoading] = useState<boolean>(hasDataSource);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -162,6 +165,10 @@ const FilterValue: FC<FilterControlProps> = ({
       time_range,
       dashboardId,
     });
+
+    if (displayName && newFormData.groupby) {
+      newFormData.groupby.unshift(displayName);
+    }
     const filterOwnState = filter.dataMask?.ownState || {};
     if (filter?.cascadeParentIds?.length) {
       // Prevent unnecessary backend requests by validating parent filter selections first
@@ -277,7 +284,48 @@ const FilterValue: FC<FilterControlProps> = ({
   }, [inputRef, outlinedFilterId, lastUpdated, filter.id, overflow]);
 
   const setDataMask = useCallback(
-    (dataMask: DataMask) => onFilterSelectionChange(filter, dataMask),
+    (dataMask: DataMask) => {
+      const _dataMask = { ...dataMask };
+      const selectValues = dataMask?.filterState?.value;
+      const displayName = filter.targets?.[0].column?.displayName;
+      const bindColumn = filter.targets?.[0].column?.name;
+      const s0 = state[0];
+
+      // map to dataMask to bind for charts
+      if (selectValues && bindColumn && displayName && s0?.data) {
+        const _values: string[] = [];
+        for (const sVal of selectValues) {
+          for (const d of s0.data) {
+            if (d[displayName] === sVal) {
+              _values.push(d[bindColumn]);
+              break;
+            }
+          }
+        }
+
+        if (_dataMask.extraFormData?.filters?.length > 0) {
+          const [f0, ...othFilters] = _dataMask.extraFormData?.filters || [];
+          const _filter = { ...f0 };
+          _filter.col = bindColumn;
+          _filter.val = _values;
+          _dataMask.extraFormData = {
+            ..._dataMask.extraFormData,
+            filters: [_filter, ...othFilters],
+          };
+        }
+
+        _dataMask.filterState = {
+          ..._dataMask.filterState,
+          value: _values,
+          label: _values.join(','),
+        };
+      }
+
+      onFilterSelectionChange(filter, {
+        ...dataMask,
+        dataMaskForBind: _dataMask,
+      });
+    },
     [filter, onFilterSelectionChange],
   );
 
