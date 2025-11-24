@@ -297,16 +297,18 @@ const FilterValue: FC<FilterControlProps> = ({
         for (const sVal of selectValues) {
           for (const d of s0.data) {
             if (d[displayName] === sVal) {
-              _values.push(d[bindColumn]);
+              _values.push(d[bindColumn] as string);
               break;
             }
           }
         }
 
-        if (_dataMask.extraFormData?.filters?.length > 0) {
+        const len = _dataMask.extraFormData?.filters?.length;
+        if (len && len > 0) {
           const [f0, ...othFilters] = _dataMask.extraFormData?.filters || [];
           const _filter = { ...f0 };
           _filter.col = bindColumn;
+          // @ts-ignore
           _filter.val = _values;
           _dataMask.extraFormData = {
             ..._dataMask.extraFormData,

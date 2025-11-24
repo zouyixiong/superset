@@ -17,6 +17,17 @@
 #
 set -euo pipefail
 
+# 使用国内镜像源加速 apt 包安装
+if [ -f /etc/apt/sources.list.d/debian.sources ]; then
+  # 对于新的 APT 配置格式 (Debian 12+)
+  sed -i 's|http://deb.debian.org|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources
+  sed -i 's|http://security.debian.org|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources
+elif [ -f /etc/apt/sources.list ]; then
+  # 对于传统的 APT 配置格式
+  sed -i 's|http://deb.debian.org|http://mirrors.aliyun.com|g' /etc/apt/sources.list
+  sed -i 's|http://security.debian.org|http://mirrors.aliyun.com|g' /etc/apt/sources.list
+fi
+
 # Ensure this script is run as root
 if [[ ${EUID} -ne 0 ]]; then
   echo "This script must be run as root" >&2

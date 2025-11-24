@@ -17,6 +17,17 @@
 #
 set -euo pipefail
 
+# 使用国内镜像源加速 apt 包安装
+if [ -f /etc/apt/sources.list.d/debian.sources ]; then
+  # 对于新的 APT 配置格式 (Debian 12+)
+  sed -i 's|http://deb.debian.org|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources
+  sed -i 's|http://security.debian.org|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources
+elif [ -f /etc/apt/sources.list ]; then
+  # 对于传统的 APT 配置格式
+  sed -i 's|http://deb.debian.org|http://mirrors.aliyun.com|g' /etc/apt/sources.list
+  sed -i 's|http://security.debian.org|http://mirrors.aliyun.com|g' /etc/apt/sources.list
+fi
+
 # Default flag
 REQUIRES_BUILD_ESSENTIAL=false
 USE_CACHE=true
@@ -47,10 +58,10 @@ fi
 # Choose whether to use pip cache
 if ${USE_CACHE}; then
   echo "Using pip cache..."
-  uv pip install "${ARGS[@]}"
+  uv pip install --index-url http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com "${ARGS[@]}"
 else
   echo "Disabling pip cache..."
-  uv pip install --no-cache-dir "${ARGS[@]}"
+  uv pip install --no-cache-dir --index-url http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com "${ARGS[@]}"
 fi
 
 # Remove build-essential if it was installed
