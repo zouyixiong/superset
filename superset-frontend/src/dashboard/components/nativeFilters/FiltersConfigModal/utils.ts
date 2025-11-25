@@ -133,9 +133,7 @@ export const createHandleSave =
         time_range: formInputs.time_range,
         controlValues: formInputs.controlValues ?? {},
         granularity_sqla: formInputs.granularity_sqla,
-        requiredFirst: Object.values(formInputs.requiredFirst ?? {}).find(
-          rf => rf,
-        ),
+        requiredFirst: formInputs.controlValues?.defaultToFirstItem === true,
         name: formInputs.name,
         filterType: formInputs.filterType,
         targets: [target],
@@ -146,7 +144,6 @@ export const createHandleSave =
         type: formInputs.type,
         description: (formInputs.description || '').trim(),
       };
-      return undefined;
     };
 
     const transformedModified = filterChanges.modified
