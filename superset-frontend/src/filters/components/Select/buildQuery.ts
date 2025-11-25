@@ -33,7 +33,11 @@ const buildQuery: BuildQuery<PluginFilterSelectQueryFormData> = (
 ) => {
   const { search, coltypeMap } = options?.ownState || {};
   const { sortAscending, sortMetric } = { ...DEFAULT_FORM_DATA, ...formData };
-  const [displayColumn, bindColumn] = formData.groupby || [];
+  // eslint-disable-next-line
+  let bindColumn = '';
+  if (formData.groupby?.length === 2) {
+    bindColumn = formData.groupby[1] as string;
+  }
 
   return buildQueryContext(formData, baseQueryObject => {
     const { columns = [], filters = [] } = baseQueryObject;
