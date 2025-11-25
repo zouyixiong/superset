@@ -33,11 +33,18 @@ const buildQuery: BuildQuery<PluginFilterSelectQueryFormData> = (
 ) => {
   const { search, coltypeMap } = options?.ownState || {};
   const { sortAscending, sortMetric } = { ...DEFAULT_FORM_DATA, ...formData };
+  const [displayColumn, bindColumn] = formData.groupby || [];
+
   return buildQueryContext(formData, baseQueryObject => {
     const { columns = [], filters = [] } = baseQueryObject;
     const extraFilters: QueryObjectFilterClause[] = [];
     if (search) {
       columns.filter(isPhysicalColumn).forEach(column => {
+        // 同时存在 displayColumn, bindColumn 时，search 参数只作用于 displayColumn
+        if (bindColumn && column === bindColumn) {
+          return;
+        }
+
         const label = getColumnLabel(column);
         if (
           coltypeMap[label] === GenericDataType.String ||
