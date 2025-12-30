@@ -319,7 +319,7 @@ const StyledDashboardContent = styled.div<{
       background-color: ${theme.colorBgContainer};
       position: relative;
       // padding: ${theme.sizeUnit * 4}px;
-      padding-top: ${theme.sizeUnit * 4}px;
+      // padding-top: ${theme.sizeUnit * 4}px;
       overflow-y: visible;
 
       // transitionable traits to show filter relevance
@@ -352,6 +352,10 @@ const StyledDashboardContent = styled.div<{
           position: relative;
           display: flex;
         }
+      }
+
+      .superset-legacy-chart-big-number {
+        padding-left: ${theme.sizeUnit * 2}px;
       }
     }
   `}

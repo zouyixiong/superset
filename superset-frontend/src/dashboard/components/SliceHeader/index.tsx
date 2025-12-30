@@ -80,7 +80,7 @@ const ChartHeaderStyles = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: calc(100% - ${theme.sizeUnit * 4}px);
-      padding-left: ${theme.sizeUnit * 4}px;
+      padding-left: ${theme.sizeUnit * 2}px;
       flex-grow: 1;
       display: -webkit-box;
       -webkit-line-clamp: 2;
