@@ -291,8 +291,9 @@ const StyledDashboardContent = styled.div<{
       width: 0;
       flex: 1;
       position: relative;
-      margin: ${theme.sizeUnit * 4}px;
-      margin-left: ${marginLeft}px;
+      // margin: ${theme.sizeUnit * 4}px;
+      // margin-left: ${marginLeft}px;
+      margin-top: ${theme.sizeUnit * 4}px;
 
       ${editMode &&
       `
@@ -317,7 +318,8 @@ const StyledDashboardContent = styled.div<{
       height: 100%;
       background-color: ${theme.colorBgContainer};
       position: relative;
-      padding: ${theme.sizeUnit * 4}px;
+      // padding: ${theme.sizeUnit * 4}px;
+      padding-top: ${theme.sizeUnit * 4}px;
       overflow-y: visible;
 
       // transitionable traits to show filter relevance
