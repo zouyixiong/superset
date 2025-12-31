@@ -16,5 +16,5 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-export { default } from './DateFilterLabel';
+export { default } from './DateRangeFilterLabel';
 export * from './utils';
