@@ -34,7 +34,11 @@ dayjs.extend(quarterOfYear);
 
 const ContentStyleWrapper = styled.div`
   ${({ theme }) => css`
-    max-width: 244px;
+    border: 1px solid ${theme.colorBorder};
+    border-radius: 6px;
+    line-height: 32px;
+    height: 32px;
+    padding: 0 8px;
   `}
 `;
 
@@ -117,9 +121,8 @@ export default function DateFilterLabel(props: DateFilterControlProps) {
     setTimeout(() => {
       if (dates) {
         const [start, end] = dates;
-        // 格式化为 Superset 时间范围格式
-        const formattedStart = start.format('YYYY-MM-DD');
-        const formattedEnd = end.format('YYYY-MM-DD HH:mm:ss');
+        const formattedStart = start.format('YYYY-MM-DD HH:mm:ss.000000');
+        const formattedEnd = end.format('YYYY-MM-DD HH:mm:ss.999999');
         onChange(`${formattedStart} : ${formattedEnd}`);
       } else {
         onChange(NO_TIME_RANGE);

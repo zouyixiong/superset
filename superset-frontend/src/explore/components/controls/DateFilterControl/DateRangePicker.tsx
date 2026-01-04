@@ -16,14 +16,49 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { Space } from '@superset-ui/core/components';
 import { RangePicker } from '@superset-ui/core/components/DatePicker';
-import type { RangePickerProps } from '@superset-ui/core/components/DatePicker';
+import { t } from '@superset-ui/core';
+import { css, styled } from '@apache-superset/core/ui';
 import dayjs, { Dayjs } from 'dayjs';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import { t } from '@superset-ui/core';
+import { useState, useEffect } from 'react';
 
 dayjs.extend(quarterOfYear);
+
+const ContentStyleWrapper = styled.div`
+  ${({ theme }) => css`
+    .pop-div {
+      position: relative;
+      top: 100%;
+      left: 0;
+      z-index: 1100;
+      // min-width: 300px;
+      background-color: ${theme.colorBgBase};
+      border-radius: 4px;
+      // padding: 8px 12px;
+      border-color: ${theme.colorSuccessBorderHover};
+    }
+    .preset-shortcuts {
+      margin-bottom: 12px;
+    }
+    .preset-shortcut {
+      padding: 2px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      // margin: 4px 0;
+      background-color: ${theme.colorBgBase};
+      border: 1px solid transparent;
+
+      :hover {
+        border-color: ${theme.colorPrimaryBorderHover};
+        border-radius: 4px;
+        border-width: 2px;
+      }
+    }
+    .custom-picker {
+    }
+  `}
+`;
 
 type DateRange = [Dayjs, Dayjs];
 
@@ -36,6 +71,29 @@ export default function DateRangePicker({
   value,
   onChange,
 }: DateRangePickerProps) {
+  const [isMobile, setIsMobile] = useState(false);
+  const [showCustomPicker, setShowCustomPicker] = useState(false);
+  const [tempValue, setTempValue] = useState<DateRange | undefined>(
+    value ? [...value] : undefined,
+  );
+
+  // 检测是否为移动端
+  useEffect(() => {
+    const checkIfMobile = () => {
+      const widthMatch = window.matchMedia('(max-width: 768px)').matches;
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobile = /mobile|android|iphone|ipad|phone/i.test(userAgent);
+      setIsMobile(widthMatch || isMobile);
+    };
+
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+
   // 预设快捷选项
   const presetShortcuts = [
     {
@@ -47,6 +105,13 @@ export default function DateRangePicker({
       value: [
         dayjs().subtract(1, 'day').startOf('day'),
         dayjs().subtract(1, 'day').endOf('day'),
+      ] as DateRange,
+    },
+    {
+      label: t('Day before Yesterday'),
+      value: [
+        dayjs().subtract(2, 'day').startOf('day'),
+        dayjs().subtract(2, 'day').endOf('day'),
       ] as DateRange,
     },
     {
@@ -78,27 +143,73 @@ export default function DateRangePicker({
         Dayjs,
       ],
     },
+    {
+      label: t('Last quarter'),
+      value: [
+        dayjs().subtract(1, 'quarter').startOf('quarter'),
+        dayjs().subtract(1, 'quarter').endOf('quarter'),
+      ] as [Dayjs, Dayjs],
+    },
   ];
 
-  // 扩展 RangePickerProps 类型，添加 shortcuts 属性
-  const rangePickerProps: RangePickerProps = {
-    value,
-    onChange: (dates: DateRange | null) => {
-      if (dates) {
-        onChange?.([dates[0].startOf('day'), dates[1].endOf('day')]);
-      } else {
-        onChange?.(null);
-      }
-    },
-    presets: presetShortcuts,
-    format: 'YYYY-MM-DD',
-    allowClear: false,
-    showTime: false,
+  // 应用预设值
+  const handlePresetSelect = (presetValue: DateRange) => {
+    onChange?.(presetValue);
+    setTempValue(presetValue);
+    setShowCustomPicker(false);
   };
 
+  // 处理自定义日期选择
+  const handleCustomChange = (dates: DateRange | null) => {
+    if (dates) {
+      setTempValue(dates);
+      onChange?.([dates[0].startOf('day'), dates[1].endOf('day')]);
+    } else {
+      setTempValue(undefined);
+      onChange?.(null);
+    }
+    setShowCustomPicker(false);
+  };
+
+  const displayValue = value
+    ? `${value[0].format('YYYY-MM-DD')} ~ ${value[1].format('YYYY-MM-DD')}`
+    : t('Select date range');
+
   return (
-    <Space direction="vertical" size="middle">
-      <RangePicker {...rangePickerProps} />
-    </Space>
+    <ContentStyleWrapper>
+      <div
+        // direction="vertical"
+        // size="middle"
+        onClick={() => setShowCustomPicker(!showCustomPicker)}
+      >
+        <span>{displayValue}</span>
+
+        {showCustomPicker && (
+          <div className="pop-div">
+            <div className="preset-shortcuts">
+              {presetShortcuts.map((shortcut, index) => (
+                <div
+                  className="preset-shortcut"
+                  key={index}
+                  onClick={() => handlePresetSelect(shortcut.value)}
+                >
+                  {shortcut.label}
+                </div>
+              ))}
+            </div>
+
+            {!isMobile && (
+              <div className="custom-picker" onClick={e => e.stopPropagation()}>
+                <RangePicker
+                  allowClear={false}
+                  value={tempValue}
+                  onChange={handleCustomChange}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </ContentStyleWrapper>
   );
 }
