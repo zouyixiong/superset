@@ -60,12 +60,102 @@ const ContentStyleWrapper = styled.div`
   `}
 `;
 
-type DateRange = [Dayjs, Dayjs];
+export type tDateRange = [Dayjs, Dayjs];
 
 type DateRangePickerProps = {
-  value?: DateRange | null;
-  onChange?: (dates: DateRange | null) => void;
+  value?: tDateRange | null;
+  onChange?: (dates: tDateRange | null) => void;
 };
+
+// 预设快捷选项
+export const presetShortcuts = [
+  {
+    key: 'today',
+    label: t('Today'),
+    value: [dayjs().startOf('day'), dayjs().endOf('day')] as tDateRange,
+  },
+  {
+    key: 'yesterday',
+    label: t('Yesterday'),
+    value: [
+      dayjs().subtract(1, 'day').startOf('day'),
+      dayjs().subtract(1, 'day').endOf('day'),
+    ] as tDateRange,
+  },
+  {
+    key: 'dayBeforeYesterday',
+    label: t('Day before Yesterday'),
+    value: [
+      dayjs().subtract(2, 'day').startOf('day'),
+      dayjs().subtract(2, 'day').endOf('day'),
+    ] as tDateRange,
+  },
+  {
+    key: 'last7Days',
+    label: t('Last 7 days'),
+    value: [
+      dayjs().subtract(7, 'day').startOf('day'),
+      dayjs().endOf('day'),
+    ] as tDateRange,
+  },
+  {
+    key: 'thisWeek',
+    label: t('This week'),
+    value: [dayjs().startOf('week'), dayjs().endOf('day')] as tDateRange,
+  },
+  {
+    key: 'lastWeek',
+    label: t('Last week'),
+    value: [
+      dayjs().subtract(1, 'week').startOf('week'),
+      dayjs().subtract(1, 'week').endOf('week'),
+    ] as tDateRange,
+  },
+  {
+    key: 'thisMonth',
+    label: t('This month'),
+    value: [dayjs().startOf('month'), dayjs().endOf('day')] as tDateRange,
+  },
+  {
+    key: 'lastMonth',
+    label: t('Last month'),
+    value: [
+      dayjs().subtract(1, 'month').startOf('month'),
+      dayjs().subtract(1, 'month').endOf('month'),
+    ] as tDateRange,
+  },
+  {
+    key: 'thisQuarter',
+    label: t('This quarter'),
+    value: [dayjs().startOf('quarter'), dayjs().endOf('day')] as tDateRange,
+  },
+  {
+    key: 'lastQuarter',
+    label: t('Last quarter'),
+    value: [
+      dayjs().subtract(1, 'quarter').startOf('quarter'),
+      dayjs().subtract(1, 'quarter').endOf('quarter'),
+    ] as tDateRange,
+  },
+];
+
+export function getTimeRangeByKey(key: string = '') {
+  if (!key) {
+    return null;
+  }
+
+  const timerange = key.toLowerCase();
+  const shortcuts = presetShortcuts.filter(
+    shortcut => shortcut.key.toLowerCase() === timerange,
+  );
+  if (shortcuts.length > 0) {
+    const [start, end] = shortcuts[0].value;
+    const formattedStart = start.format('YYYY-MM-DD HH:mm:ss.000000');
+    const formattedEnd = end.format('YYYY-MM-DD HH:mm:ss.999999');
+    return `${formattedStart} : ${formattedEnd}`;
+  }
+  return null;
+}
 
 export default function DateRangePicker({
   value,
@@ -73,7 +163,7 @@ export default function DateRangePicker({
 }: DateRangePickerProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [showCustomPicker, setShowCustomPicker] = useState(false);
-  const [tempValue, setTempValue] = useState<DateRange | undefined>(
+  const [tempValue, setTempValue] = useState<tDateRange | undefined>(
     value ? [...value] : undefined,
   );
 
@@ -94,73 +184,15 @@ export default function DateRangePicker({
     };
   }, []);
 
-  // 预设快捷选项
-  const presetShortcuts = [
-    {
-      label: t('Today'),
-      value: [dayjs().startOf('day'), dayjs().endOf('day')] as DateRange,
-    },
-    {
-      label: t('Yesterday'),
-      value: [
-        dayjs().subtract(1, 'day').startOf('day'),
-        dayjs().subtract(1, 'day').endOf('day'),
-      ] as DateRange,
-    },
-    {
-      label: t('Day before Yesterday'),
-      value: [
-        dayjs().subtract(2, 'day').startOf('day'),
-        dayjs().subtract(2, 'day').endOf('day'),
-      ] as DateRange,
-    },
-    {
-      label: t('This week'),
-      value: [dayjs().startOf('week'), dayjs().endOf('day')] as DateRange,
-    },
-    {
-      label: t('Last week'),
-      value: [
-        dayjs().subtract(1, 'week').startOf('week'),
-        dayjs().subtract(1, 'week').endOf('week'),
-      ] as DateRange,
-    },
-    {
-      label: t('This month'),
-      value: [dayjs().startOf('month'), dayjs().endOf('day')] as DateRange,
-    },
-    {
-      label: t('Last month'),
-      value: [
-        dayjs().subtract(1, 'month').startOf('month'),
-        dayjs().subtract(1, 'month').endOf('month'),
-      ] as DateRange,
-    },
-    {
-      label: t('This quarter'),
-      value: [dayjs().startOf('quarter'), dayjs().endOf('day')] as [
-        Dayjs,
-        Dayjs,
-      ],
-    },
-    {
-      label: t('Last quarter'),
-      value: [
-        dayjs().subtract(1, 'quarter').startOf('quarter'),
-        dayjs().subtract(1, 'quarter').endOf('quarter'),
-      ] as [Dayjs, Dayjs],
-    },
-  ];
-
   // 应用预设值
-  const handlePresetSelect = (presetValue: DateRange) => {
+  const handlePresetSelect = (presetValue: tDateRange) => {
     onChange?.(presetValue);
     setTempValue(presetValue);
     setShowCustomPicker(false);
   };
 
   // 处理自定义日期选择
-  const handleCustomChange = (dates: DateRange | null) => {
+  const handleCustomChange = (dates: tDateRange | null) => {
     if (dates) {
       setTempValue(dates);
       onChange?.([dates[0].startOf('day'), dates[1].endOf('day')]);

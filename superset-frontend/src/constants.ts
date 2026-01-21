@@ -39,6 +39,10 @@ export const URL_PARAMS = {
     name: 'native_filters',
     type: 'rison',
   },
+  timeRange: {
+    name: 'time_range',
+    type: 'string',
+  },
   nativeFiltersKey: {
     name: 'native_filters_key',
     type: 'string',

@@ -23,11 +23,11 @@ import { Constants } from '@superset-ui/core/components';
 import ControlHeader from 'src/explore/components/ControlHeader';
 import { useDebouncedEffect } from 'src/explore/exploreUtils';
 import { noOp } from 'src/utils/common';
-import DateRangePicker from './DateRangePicker';
+import DateRangePicker, { tDateRange } from './DateRangePicker';
 
 import { DateFilterControlProps } from './types';
 import { useDefaultTimeFilter } from './utils';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
 
 dayjs.extend(quarterOfYear);
@@ -49,7 +49,7 @@ export default function DateFilterLabel(props: DateFilterControlProps) {
   const value = props.value ?? defaultTimeFilter;
 
   // 设置默认值为昨天
-  const [timeRangeValue, setTimeRangeValue] = useState<[Dayjs, Dayjs] | null>(
+  const [timeRangeValue, setTimeRangeValue] = useState<tDateRange | null>(
     () => {
       if (value && value !== NO_TIME_RANGE && value.includes(' : ')) {
         const [start, end] = value.split(' : ');
@@ -68,7 +68,7 @@ export default function DateFilterLabel(props: DateFilterControlProps) {
   // 使用ref跟踪是否是初始渲染
   const isInitialMount = useRef(true);
 
-  const updateTimeRange = (range?: [Dayjs, Dayjs]) => {
+  const updateTimeRange = (range?: tDateRange) => {
     setTimeout(() => {
       if (!range) {
         setTimeRangeValue(null);
@@ -115,7 +115,7 @@ export default function DateFilterLabel(props: DateFilterControlProps) {
     [timeRangeValue],
   );
 
-  const handleDateRangeChange = (dates: [Dayjs, Dayjs] | null) => {
+  const handleDateRangeChange = (dates: tDateRange | null) => {
     setTimeRangeValue(dates);
     // 日期选择后直接触发 onSave
     setTimeout(() => {

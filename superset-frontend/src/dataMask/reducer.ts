@@ -42,6 +42,9 @@ import {
   UPDATE_DATA_MASK,
 } from './actions';
 import { areObjectsEqual } from '../reduxUtils';
+import { getTimeRangeByKey } from 'src/explore/components/controls/DateFilterControl/DateRangePicker';
+import { getUrlParam } from 'src/utils/urlUtils';
+import { URL_PARAMS } from 'src/constants';
 
 type FilterWithExtaFromData = Filter & {
   extraFormData?: ExtraFormData;
@@ -61,6 +64,25 @@ export function getInitialDataMask(
   } as DataMask | DataMaskWithId;
 }
 
+// update filter_time filter by URL param `time_range`, to suppert relative time ranges init values
+function processRelativeTimeRanges(filter: Filter) {
+  // Check if this is a time filter
+  if (filter.filterType === 'filter_time') {
+    const urlTimeRange: string = getUrlParam(URL_PARAMS.timeRange) || '';
+    const urlTimeRangeValue = getTimeRangeByKey(urlTimeRange);
+
+    if (urlTimeRangeValue) {
+      filter.defaultDataMask.filterState =
+        filter.defaultDataMask.filterState || {};
+      filter.defaultDataMask.filterState.value = urlTimeRangeValue;
+
+      filter.defaultDataMask.extraFormData =
+        filter.defaultDataMask.extraFormData || {};
+      filter.defaultDataMask.extraFormData.time_range = urlTimeRangeValue;
+    }
+  }
+}
+
 function fillNativeFilters(
   filterConfig: FilterConfiguration,
   mergedDataMask: DataMaskStateWithId,
@@ -69,6 +91,9 @@ function fillNativeFilters(
   currentFilters?: Filters,
 ) {
   filterConfig.forEach((filter: Filter) => {
+    // init relative time ranges for filter_time filter
+    processRelativeTimeRanges(filter);
+
     const dataMask = initialDataMask || {};
     mergedDataMask[filter.id] = {
       ...getInitialDataMask(filter.id), // take initial data
