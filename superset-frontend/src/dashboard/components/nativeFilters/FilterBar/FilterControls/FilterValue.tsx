@@ -148,9 +148,12 @@ const FilterValue: FC<FilterControlProps> = ({
 
   useEffect(() => {
     if (!inViewFirstTime && inView) {
-      setInViewFirstTime(true);
+      // 使用 setTimeout 避免在渲染期间同步更新状态
+      setTimeout(() => {
+        setInViewFirstTime(true);
+      }, 0);
     }
-  }, [inView, inViewFirstTime, setInViewFirstTime]);
+  }, [inView, inViewFirstTime]);
 
   useEffect(() => {
     if (!inViewFirstTime) {
@@ -211,12 +214,18 @@ const FilterValue: FC<FilterControlProps> = ({
         !isEqual(ownState, filterOwnState) ||
         shouldRefresh)
     ) {
-      setFormData(newFormData);
-      setOwnState(filterOwnState);
+      // 使用setTimeout来异步更新状态，避免在effect中同步更新导致级联渲染
+      setTimeout(() => {
+        setFormData(newFormData);
+        setOwnState(filterOwnState);
+      }, 0);
+
       if (!hasDataSource) {
         return;
       }
-      setIsRefreshing(true);
+      setTimeout(() => {
+        setIsRefreshing(true);
+      }, 0);
       getChartDataRequest({
         formData: newFormData,
         force: shouldRefresh,
@@ -270,6 +279,12 @@ const FilterValue: FC<FilterControlProps> = ({
     isRefreshing,
     shouldRefresh,
     dataMaskSelected,
+    adhoc_filters,
+    time_range,
+    dashboardId,
+    formData,
+    displayName,
+    ownState,
   ]);
 
   useEffect(() => {
@@ -328,7 +343,7 @@ const FilterValue: FC<FilterControlProps> = ({
         dataMaskForBind: _dataMask,
       });
     },
-    [filter, onFilterSelectionChange],
+    [filter, onFilterSelectionChange, state],
   );
 
   const setFocusedFilter = useCallback(() => {

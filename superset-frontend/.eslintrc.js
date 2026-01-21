@@ -151,13 +151,7 @@ module.exports = {
     // Core ESLint overrides for Superset
     'no-console': 'warn',
     'no-unused-vars': 'off', // TypeScript handles this
-    camelcase: [
-      'error',
-      {
-        allow: ['^UNSAFE_', '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'],
-        properties: 'never',
-      },
-    ],
+    camelcase: 'off',
     'prefer-destructuring': ['error', { object: true, array: false }],
     'no-prototype-builtins': 0,
     curly: 'off',

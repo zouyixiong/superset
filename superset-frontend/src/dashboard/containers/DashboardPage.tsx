@@ -169,7 +169,8 @@ export const DashboardPage: FC<PageProps> = ({ idOrSlug }: PageProps) => {
     // eslint-disable-next-line consistent-return
     async function getDataMaskApplied() {
       const permalinkKey = getUrlParam(URL_PARAMS.permalinkKey);
-      const nativeFilterKeyValue = getUrlParam(URL_PARAMS.nativeFiltersKey);
+      // NOTE：这个 nativeFiltersKey 缓存的 filter values，有时是错误的，跟联动、其他 URL 参数 可能冲突
+      const nativeFilterKeyValue = ''; // getUrlParam(URL_PARAMS.nativeFiltersKey);
       const isOldRison = getUrlParam(URL_PARAMS.nativeFilters);
 
       let dataMask = nativeFilterKeyValue || {};
