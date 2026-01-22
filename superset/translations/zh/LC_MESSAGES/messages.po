@@ -1542,7 +1542,7 @@ msgstr "注释层仍在加载。"
 
 # stroke 中风？？？
 msgid "Annotation layer stroke"
-msgstr "注释层混乱"
+msgstr "注释层描边"
 
 msgid "Annotation layer time column"
 msgstr "注释层时间列"
@@ -1608,7 +1608,7 @@ msgid ""
 msgstr "此处选择的任何调色板都将覆盖应用于此看板的各个图表的颜色"
 
 msgid "Any databases that allow connections via SQL Alchemy URIs can be added. "
-msgstr "可以添加任何允许通过SQL AlChemy URI进行连接的数据库。"
+msgstr "可以添加任何允许通过SQL Alchemy URI进行连接的数据库。"
 
 msgid ""
 "Any databases that allow connections via SQL Alchemy URIs can be added. "
@@ -1662,6 +1662,10 @@ msgstr "四月"
 #, fuzzy
 msgid "Arc"
 msgstr "圆弧"
+
+#, fuzzy
+msgid "DATETIME"
+msgstr "日期时间"
 
 #, fuzzy
 msgid "Are you sure you intend to overwrite the following values?"
@@ -1730,7 +1734,7 @@ msgstr "确实要保存并应用更改吗？"
 
 #, fuzzy
 msgid "Area"
-msgstr "文本区域"
+msgstr "区域"
 
 msgid "Area Chart"
 msgstr "面积图"
@@ -1760,11 +1764,15 @@ msgid "Assist"
 msgstr "关联"
 
 msgid "Asynchronous query execution"
-msgstr "异步执行查询"
+msgstr "异步查询执行"
 
 #, fuzzy
 msgid "Attribution"
 msgstr "分布"
+
+msgid "Authorization needed"
+msgstr "需要授权"
+
 
 msgid "August"
 msgstr "八月"
@@ -2251,9 +2259,8 @@ msgstr "无法解析时间字符串[%(human_readable)s]"
 msgid "Cartodiagram"
 msgstr "分区图"
 
-#, fuzzy
 msgid "Catalog"
-msgstr "标签"
+msgstr "目录"
 
 msgid "Categorical"
 msgstr "分类"
@@ -2346,9 +2353,8 @@ msgstr "范围"
 msgid "Changes saved."
 msgstr "修改已保存"
 
-#, fuzzy
 msgid "Changing one or more of these dashboards is forbidden"
-msgstr "一个或多个看板的修改被禁止"
+msgstr "禁止修改一个或多个看板"
 
 msgid ""
 "Changing the dataset may break the chart if the chart relies on columns "
@@ -2477,36 +2483,30 @@ msgstr "上次修改人 %s"
 msgid "Chart name"
 msgstr "图表名称"
 
-#, fuzzy
 msgid "Chart not found"
-msgstr "图表 %(id)s 没有找到"
+msgstr "未找到图表"
 
 msgid "Chart options"
 msgstr "图表选项"
 
-#, fuzzy
 msgid "Chart owners"
-msgstr "图表所有者：%s"
+msgstr "图表所有者"
 
 msgid "Chart parameters are invalid."
 msgstr "图表参数无效。"
 
-#, fuzzy
 msgid "Chart properties updated"
-msgstr "编辑图表属性"
+msgstr "图表属性已更新"
 
-#, fuzzy
 msgid "Chart size"
-msgstr "图表"
+msgstr "图表大小"
 
-#, fuzzy
 msgid "Chart title"
 msgstr "图表标题"
 
 msgid "Chart type requires a dataset"
-msgstr ""
+msgstr "图表类型需要数据集"
 
-#, fuzzy
 msgid "Chart width"
 msgstr "图表宽度"
 
@@ -2579,7 +2579,7 @@ msgstr "选择一个目标"
 
 #, fuzzy
 msgid "Choose already exists"
-msgstr "标签已存在"
+msgstr "选项已存在"
 
 msgid "Choose chart type"
 msgstr "选择图表类型"
@@ -2825,7 +2825,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Color: "
-msgstr "颜色"
+msgstr "颜色："
 
 msgid "Colors"
 msgstr "颜色"
@@ -2896,7 +2896,7 @@ msgstr "字段作为数据文件的行标签使用。如果没有索引字段，
 
 #, fuzzy
 msgid "Column type"
-msgstr "列数据类型"
+msgstr "列类型"
 
 #, fuzzy
 msgid "Columnar upload"
@@ -3051,9 +3051,12 @@ msgstr "配置如何在这里显示您的标注。"
 msgid "Confirm Password"
 msgstr "显示密码"
 
+msgid "Confirm"
+msgstr "确认"
+
 #, fuzzy
 msgid "Confirm overwrite"
-msgstr "确认保存"
+msgstr "确认覆盖"
 
 msgid "Confirm save"
 msgstr "确认保存"
@@ -3094,11 +3097,11 @@ msgstr "连接失败，请检查您的连接配置"
 
 #, fuzzy
 msgid "Content format"
-msgstr "日期格式化"
+msgstr "内容格式"
 
 #, fuzzy
 msgid "Content type"
-msgstr "每阶类型"
+msgstr "内容类型"
 
 #, fuzzy
 msgid "Continue"
@@ -3219,7 +3222,7 @@ msgid "Could not resolve hostname: \"%(host)s\"."
 msgstr ""
 
 msgid "Could not validate the user in the current session."
-msgstr ""
+msgstr "无法验证当前会话中的用户。"
 
 #, fuzzy
 msgid "Count"
@@ -3263,6 +3266,10 @@ msgstr "创建图表"
 #, fuzzy
 msgid "Create a dataset"
 msgstr "创建数据集 "
+
+#, fuzzy
+msgid "Greater or equal (>=)"
+msgstr "大于或等于 (>=)"
 
 msgid ""
 "Create a dataset to begin visualizing your data as a chart or go to\n"
@@ -3321,30 +3328,30 @@ msgid "Creator"
 msgstr "作者"
 
 msgid "Credentials uploaded"
-msgstr ""
+msgstr "凭证已上传"
 
 #, fuzzy
 msgid "Crimson"
 msgstr "血红色"
 
 msgid "Cross-filter will be applied to all of the charts that use this dataset."
-msgstr ""
+msgstr "交叉过滤器将应用于所有使用此数据集的图表。"
 
 #, fuzzy
 msgid "Cross-filtering is not enabled for this dashboard."
-msgstr "此看板中没有启用交叉筛选。"
+msgstr "此看板未启用交叉过滤。"
 
 #, fuzzy
 msgid "Cross-filtering is not enabled in this dashboard"
-msgstr "此看板中没有启用交叉筛选。"
+msgstr "此看板未启用交叉过滤。"
 
 #, fuzzy
 msgid "Cross-filtering scoping"
-msgstr "交叉筛选作用域"
+msgstr "交叉过滤范围"
 
 #, fuzzy
 msgid "Cross-filters"
-msgstr "交叉筛选"
+msgstr "交叉过滤器"
 
 msgid "Cumulative"
 msgstr "累计"
@@ -3410,9 +3417,9 @@ msgid "Custom SQL ad-hoc metrics are not enabled for this dataset"
 msgstr "此数据集无法启用自定义SQL即席查询、"
 
 msgid "Custom SQL fields cannot contain sub-queries."
-msgstr ""
+msgstr "自定义SQL字段不能包含子查询。"
 
-#, fuzzy
+
 msgid "Custom color palettes"
 msgstr "自动补全"
 
@@ -3515,19 +3522,19 @@ msgid "Dashboard [{}] just got created and chart [{}] was added to it"
 msgstr "看板 [{}] 刚刚被创建，并且图表 [{}] 已被添加到其中"
 
 msgid "Dashboard cannot be copied due to invalid parameters."
-msgstr ""
+msgstr "由于参数无效，看板无法复制。"
 
 #, fuzzy
 msgid "Dashboard cannot be favorited."
-msgstr "看板无法更新。"
+msgstr "无法收藏看板。"
 
 #, fuzzy
 msgid "Dashboard cannot be unfavorited."
-msgstr "看板无法更新。"
+msgstr "无法取消收藏看板。"
 
 #, fuzzy
 msgid "Dashboard color configuration could not be updated."
-msgstr "看板无法更新。"
+msgstr "看板颜色配置无法更新。"
 
 msgid "Dashboard could not be deleted."
 msgstr "看板无法被删除。"
@@ -3572,7 +3579,7 @@ msgstr "看板"
 
 #, fuzzy
 msgid "Dashboard usage"
-msgstr "看板"
+msgstr "看板使用情况"
 
 msgid "Dashboards"
 msgstr "看板"
@@ -3595,7 +3602,7 @@ msgid "Data Table"
 msgstr "数据表"
 
 msgid "Data URI is not allowed."
-msgstr ""
+msgstr "不允许使用Data URI。"
 
 msgid "Data Zoom"
 msgstr "数据缩放"
@@ -3710,11 +3717,11 @@ msgstr "数据库设置已更新"
 
 #, fuzzy
 msgid "Database type does not support file uploads."
-msgstr "数据库不支持子查询"
+msgstr "数据库类型不支持文件上传。"
 
 #, fuzzy
 msgid "Database upload file failed"
-msgstr "选择将要上传文件的数据库"
+msgstr "数据库上传文件失败"
 
 msgid "Database upload file failed, while saving metadata"
 msgstr ""
@@ -3801,7 +3808,7 @@ msgid "Datasource does not exist"
 msgstr "数据集不存在"
 
 msgid "Datasource type is invalid"
-msgstr ""
+msgstr "数据源类型无效"
 
 msgid "Datasource type is required when datasource_id is given"
 msgstr "给定数据源id时，需要提供数据源类型"
@@ -3842,7 +3849,7 @@ msgstr "数据库引擎未返回所有查询的列"
 
 #, fuzzy
 msgid "Deactivate"
-msgstr "禁用"
+msgstr "停用"
 
 msgid "December"
 msgstr "十二月"
@@ -3962,6 +3969,9 @@ msgid ""
 "that serparate the area above and below a given threshold. Isobands "
 "represent a collection of polygons that fill the are containing values in"
 " a given threshold range."
+msgstr "定义轮廓层。等值线表示将高于和低于给定阈值的区域分开的线段集合。等值带表示填充包含给定阈值范围内值的区域的多边形集合。"
+
+
 msgstr "定义等高线图层。等值线代表一组线段的集合，这些线段将高于和低于给定阈值的区域分隔开来。等值带代表一组多边形的集合，用以填充包含在给定阈值范围内的区域。"
 
 msgid "Define delivery schedule, timezone, and frequency settings."
@@ -4015,10 +4025,10 @@ msgid "Delete Annotation?"
 msgstr "删除注释？"
 
 msgid "Delete Database?"
-msgstr "确定删除数据库？"
+msgstr "删除数据库？"
 
 msgid "Delete Dataset?"
-msgstr "确定删除数据集？"
+msgstr "删除数据集？"
 
 msgid "Delete Layer?"
 msgstr "确定删除图层？"
@@ -4029,16 +4039,16 @@ msgstr "确定删除查询？"
 msgid "Delete Report?"
 msgstr "删除报表？"
 
-#, fuzzy
-msgid "Delete Role?"
-msgstr "删除"
-
 msgid "Delete Template?"
 msgstr "删除模板？"
 
 #, fuzzy
+msgid "Delete Role?"
+msgstr "删除角色？"
+
+#, fuzzy
 msgid "Delete User?"
-msgstr "确定删除查询？"
+msgstr "删除用户？"
 
 msgid "Delete all Really?"
 msgstr "确定删除全部？"
@@ -4060,7 +4070,7 @@ msgstr "删除查询"
 
 #, fuzzy
 msgid "Delete role"
-msgstr "删除"
+msgstr "删除角色"
 
 msgid "Delete template"
 msgstr "删除模板"
@@ -4070,11 +4080,11 @@ msgstr "删除此容器并保存以移除此消息。"
 
 #, fuzzy
 msgid "Delete user"
-msgstr "删除查询"
+msgstr "删除用户"
 
 #, fuzzy
 msgid "Deleted"
-msgstr "删除"
+msgstr "已删除"
 
 #, python-format
 msgid "Deleted %(num)d annotation"
@@ -4125,21 +4135,20 @@ msgstr[0] "删除 %(num)d 个保存的查询"
 msgid "Deleted %s"
 msgstr "已删除：%s"
 
-#, fuzzy, python-format
+#, fuzzy
 msgid "Deleted role: %s"
-msgstr "已删除：%s"
+msgstr "已删除角色：%s"
 
-#, fuzzy, python-format
 msgid "Deleted roles: %s"
 msgstr "已删除：%s"
 
-#, fuzzy, python-format
 msgid "Deleted user: %s"
 msgstr "已删除：%s"
 
-#, fuzzy, python-format
+#, fuzzy
 msgid "Deleted users: %s"
-msgstr "已删除：%s"
+msgstr "已删除用户：%s"
+
 
 #, python-format
 msgid "Deleted: %s"
@@ -4247,7 +4256,7 @@ msgstr "在 SQL 工具箱中获取表的元数据时禁用数据预览。当使�
 
 #, fuzzy
 msgid "Disable drill to detail"
-msgstr "钻取详情"
+msgstr "禁用钻取详情"
 
 msgid "Disable embedding?"
 msgstr "禁用嵌入吗？"
@@ -4308,7 +4317,7 @@ msgstr "显示行级合计"
 
 #, fuzzy
 msgid "Display type icon"
-msgstr "时间类型图标"
+msgstr "显示类型图标"
 
 msgid ""
 "Displays connections between entities in a graph structure. Useful for "
@@ -4348,7 +4357,7 @@ msgstr "下载"
 
 #, fuzzy
 msgid "Download as Image"
-msgstr "下载为图片"
+msgstr "下载为图像"
 
 msgid "Download as image"
 msgstr "下载为图片"
@@ -4385,7 +4394,7 @@ msgstr "当标签在外侧时，是否在饼图到标签之间连线？"
 
 #, fuzzy
 msgid "Draw split lines for minor axis ticks"
-msgstr "绘制次要Y轴刻度的分割线"
+msgstr "绘制次要轴刻度的分割线"
 
 msgid "Draw split lines for minor y-axis ticks"
 msgstr "绘制次要Y轴刻度的分割线"
@@ -4463,11 +4472,11 @@ msgstr "复制数据集"
 
 #, fuzzy
 msgid "Duplicate role"
-msgstr "复制"
+msgstr "复制角色"
 
 #, fuzzy, python-format
 msgid "Duplicate role %(name)s"
-msgstr "重复的角色 %(name)s"
+msgstr "复制角色 %(name)s"
 
 msgid "Duplicate tab"
 
@@ -4581,7 +4590,7 @@ msgstr "编辑报告"
 
 #, fuzzy
 msgid "Edit Role"
-msgstr "编辑模式"
+msgstr "编辑角色"
 
 #, fuzzy
 msgid "Edit Rule"
@@ -4593,7 +4602,7 @@ msgstr "编辑标签"
 
 #, fuzzy
 msgid "Edit User"
-msgstr "编辑查询"
+msgstr "编辑用户"
 
 msgid "Edit annotation"
 msgstr "编辑注释"
@@ -4634,7 +4643,7 @@ msgstr "编辑查询"
 
 #, fuzzy
 msgid "Edit role"
-msgstr "编辑模式"
+msgstr "编辑角色"
 
 msgid "Edit template"
 msgstr "编辑模板"
@@ -4651,7 +4660,7 @@ msgstr "编辑时间范围"
 
 #, fuzzy
 msgid "Edit user"
-msgstr "编辑查询"
+msgstr "编辑用户"
 
 msgid "Edited"
 msgstr "已编辑"
@@ -4660,7 +4669,7 @@ msgid "Editing 1 filter:"
 msgstr "编辑1个过滤条件："
 
 msgid "Either the database is spelled incorrectly or does not exist."
-msgstr "数据库拼写不正确或不存在。"
+msgstr "数据库名称拼写错误或数据库不存在。"
 
 #, python-format
 msgid "Either the username \"%(username)s\" or the password is incorrect."
@@ -4685,7 +4694,7 @@ msgstr "详细信息"
 
 #, fuzzy
 msgid "Email is required"
-msgstr "需要值"
+msgstr "需要电子邮件"
 
 msgid "Email reports active"
 msgstr "激活邮件报告"
@@ -4726,11 +4735,11 @@ msgstr "空集合"
 
 #, fuzzy
 msgid "Empty column"
-msgstr "空的列"
+msgstr "空列"
 
 #, fuzzy
 msgid "Empty query result"
-msgstr "空的查询结果"
+msgstr "空查询结果"
 
 msgid "Empty query?"
 msgstr "查询为空？"
@@ -4777,7 +4786,7 @@ msgid ""
 "Encountered invalid NULL spatial entry,"
 "                                        please consider filtering those "
 "out"
-msgstr "遇到无效的为 NULL 的空间条目，请考虑将其过滤掉"
+msgstr "遇到无效的NULL空间条目，请考虑将其过滤掉"
 
 msgid "End"
 msgstr "结束"
@@ -4820,7 +4829,7 @@ msgstr "进入CA_BUNDLE"
 
 #, fuzzy
 msgid "Enter Primary Credentials"
-msgstr "上传主凭据"
+msgstr "输入主凭证"
 
 msgid "Enter a name for this sheet"
 msgstr "输入此工作表的名称"
@@ -4854,11 +4863,11 @@ msgstr ""
 
 #, fuzzy
 msgid "Enter the user's first name"
-msgstr "告警名称"
+msgstr "输入用户的姓名"
 
 #, fuzzy
 msgid "Enter the user's last name"
-msgstr "告警名称"
+msgstr "输入用户的姓氏"
 
 msgid "Enter the user's username"
 msgstr ""
@@ -4877,7 +4886,7 @@ msgstr "错误"
 
 #, fuzzy
 msgid "Error Fetching Tagged Objects"
-msgstr "获取标签对象错误"
+msgstr "获取标记对象时出错"
 
 #, fuzzy, python-format
 msgid "Error deleting %s"
@@ -4885,7 +4894,7 @@ msgstr "获取数据时出错：%s"
 
 #, fuzzy
 msgid "Error faving chart"
-msgstr "保存数据集时发生错误"
+msgstr "收藏图表时出错"
 
 #, python-format
 msgid "Error in jinja expression in HAVING clause: %(msg)s"
@@ -4915,35 +4924,35 @@ msgstr "错误（暗色）"
 
 #, fuzzy
 msgid "Error reading CSV file"
-msgstr "保存数据集时发生错误"
+msgstr "读取CSV文件时出错"
 
 #, fuzzy
 msgid "Error reading Columnar file"
-msgstr "上传列式文件"
+msgstr "读取列式文件时出错"
 
 #, fuzzy
 msgid "Error reading Excel file"
-msgstr "上传Excel"
+msgstr "读取Excel文件时出错"
 
 #, fuzzy
 msgid "Error saving dataset"
-msgstr "保存数据集时发生错误"
+msgstr "保存数据集时出错"
 
 #, fuzzy
 msgid "Error unfaving chart"
-msgstr "保存数据集时发生错误"
+msgstr "取消收藏图表时出错"
 
 #, fuzzy
 msgid "Error while adding role!"
-msgstr "获取图表时出错"
+msgstr "添加角色时出错！"
 
 #, fuzzy
 msgid "Error while adding user!"
-msgstr "获取图表时出错"
+msgstr "添加用户时出错！"
 
 #, fuzzy
 msgid "Error while duplicating role!"
-msgstr "获取图表时出错"
+msgstr "复制角色时出错！"
 
 msgid "Error while fetching charts"
 msgstr "获取图表时出错"
@@ -4954,15 +4963,15 @@ msgstr "获取数据时出错：%s"
 
 #, fuzzy
 msgid "Error while fetching permissions"
-msgstr "获取图表时出错"
+msgstr "获取权限时出错"
 
 #, fuzzy
 msgid "Error while fetching roles"
-msgstr "获取图表时出错"
+msgstr "获取角色时出错"
 
 #, fuzzy
 msgid "Error while fetching users"
-msgstr "获取图表时出错"
+msgstr "获取用户时出错"
 
 #, python-format
 msgid "Error while rendering virtual dataset query: %(msg)s"
@@ -4970,11 +4979,11 @@ msgstr "保存查询时出错：%(msg)s"
 
 #, fuzzy
 msgid "Error while updating role!"
-msgstr "获取图表时出错"
+msgstr "更新角色时出错！"
 
 #, fuzzy
 msgid "Error while updating user!"
-msgstr "获取图表时出错"
+msgstr "更新用户时出错！"
 
 #, python-format
 msgid "Error: %(error)s"
@@ -5050,7 +5059,7 @@ msgstr "执行日志"
 
 #, fuzzy
 msgid "Existing dataset"
-msgstr "存在的数据集"
+msgstr "现有数据集"
 
 msgid "Exit fullscreen"
 msgstr "退出全屏"
@@ -5106,11 +5115,11 @@ msgstr "导出查询"
 
 #, fuzzy
 msgid "Export to .CSV"
-msgstr "导出为CSV"
+msgstr "导出为.CSV"
 
 #, fuzzy
 msgid "Export to .JSON"
-msgstr "导出为JSON"
+msgstr "导出为.JSON"
 
 #, fuzzy
 msgid "Export to Excel"
@@ -5122,15 +5131,15 @@ msgstr "导出为PDF"
 
 #, fuzzy
 msgid "Export to Pivoted .CSV"
-msgstr "导出为透视表形式的CSV"
+msgstr "导出为透视.CSV"
 
 #, fuzzy
 msgid "Export to full .CSV"
-msgstr "导出全量CSV"
+msgstr "导出为完整.CSV"
 
 #, fuzzy
 msgid "Export to full Excel"
-msgstr "导出全量Excel"
+msgstr "导出为完整Excel"
 
 msgid "Export to original .CSV"
 msgstr "导出原始CSV"
@@ -5146,7 +5155,7 @@ msgstr "在 SQL 工具箱中展示"
 
 #, fuzzy
 msgid "Extent"
-msgstr "最近"
+msgstr "范围"
 
 msgid "Extra"
 msgstr "扩展"
@@ -5231,22 +5240,22 @@ msgstr ""
 
 #, fuzzy
 msgid "Failed to retrieve advanced type"
-msgstr "检索高级类型失败"
+msgstr "未能检索高级类型"
 
 #, fuzzy
 msgid "Failed to save cross-filter scoping"
-msgstr "保存交叉筛选作用域失败"
+msgstr "保存交叉过滤范围失败"
 
 msgid "Failed to start remote query on a worker."
 msgstr "无法启动远程查询"
 
 #, fuzzy, python-format
 msgid "Failed to stop query."
-msgstr "停止查询失败。 %s"
+msgstr "停止查询失败。"
 
 #, fuzzy
 msgid "Failed to tag items"
-msgstr "给对象打标签失败"
+msgstr "标记项目失败"
 
 msgid "Failed to update report"
 msgstr "更新报告失败"
@@ -5293,15 +5302,15 @@ msgid "File"
 msgstr "文件"
 
 msgid "File extension is not allowed."
-msgstr ""
+msgstr "不允许使用此文件扩展名。"
 
 #, fuzzy
 msgid "File settings"
-msgstr "过滤器设置"
+msgstr "文件设置"
 
 #, fuzzy
 msgid "File upload"
-msgstr "上传"
+msgstr "文件上传"
 
 #, fuzzy
 msgid "Fill Color"
@@ -5322,7 +5331,7 @@ msgstr "过滤器"
 
 #, fuzzy
 msgid "Filter Configuration"
-msgstr "过滤配置"
+msgstr "过滤器配置"
 
 msgid "Filter List"
 msgstr "过滤列表"
@@ -5362,7 +5371,7 @@ msgstr "过滤值（区分大小写）"
 
 #, fuzzy
 msgid "Filter value is required"
-msgstr "过滤器制是必须的"
+msgstr "过滤值是必需的"
 
 msgid "Filter value list cannot be empty"
 msgstr "过滤器值列表不能为空"
@@ -5423,11 +5432,11 @@ msgstr "第一个值"
 
 #, fuzzy
 msgid "First name"
-msgstr "图表名称"
+msgstr "名字"
 
 #, fuzzy
 msgid "First name is required"
-msgstr "需要名称"
+msgstr "名字是必需的"
 
 msgid ""
 "Fix the trend line to the full time range specified in case filtered "
@@ -5553,7 +5562,7 @@ msgstr "邮件中附上格式化好的CSV"
 
 #, fuzzy
 msgid "Formatted date"
-msgstr "格式日期"
+msgstr "格式化日期"
 
 #, fuzzy
 msgid "Formatted value"
@@ -5561,7 +5570,7 @@ msgstr "格式化值"
 
 #, fuzzy
 msgid "Formatting"
-msgstr "自动匹配格式化"
+msgstr "格式化"
 
 #, fuzzy
 msgid "Formula"
@@ -5594,7 +5603,7 @@ msgstr "起始日期不能晚于结束日期"
 
 #, fuzzy
 msgid "Full name"
-msgstr "完整名称"
+msgstr "全名"
 
 msgid "Funnel Chart"
 msgstr "漏斗图"
@@ -5642,13 +5651,13 @@ msgstr "Geohash"
 
 #, fuzzy
 msgid "Geometry Column"
-msgstr "空的列"
+msgstr "几何列"
 
 msgid "Get the last date by the date unit."
-msgstr "按日期单位获取最后的日期。"
+msgstr "按日期单位获取最后日期。"
 
 msgid "Get the specify date for the holiday"
-msgstr "获取指定节假日的日期"
+msgstr "获取节假日的指定日期"
 
 msgid "Give access to multiple catalogs in a single database connection."
 msgstr ""
@@ -5725,7 +5734,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Has created by"
-msgstr "已创建"
+msgstr "已创建者"
 
 msgid "Header"
 msgstr "标题行"
@@ -5746,7 +5755,7 @@ msgstr "迷你图的高度"
 
 #, fuzzy
 msgid "Hide Column"
-msgstr "时间列"
+msgstr "隐藏列"
 
 #, fuzzy
 msgid "Hide Line"
@@ -5754,7 +5763,7 @@ msgstr "隐藏线"
 
 #, fuzzy
 msgid "Hide chart description"
-msgstr "隐藏图表说明"
+msgstr "隐藏图表描述"
 
 msgid "Hide layer"
 msgstr "隐藏Layer"
@@ -5791,7 +5800,7 @@ msgstr "横向"
 
 #, fuzzy
 msgid "Horizontal (Top)"
-msgstr "横向（顶部对齐）"
+msgstr "水平（顶部）"
 
 msgid "Horizontal alignment"
 msgstr "水平对齐"
@@ -5854,21 +5863,21 @@ msgstr ""
 "的属性伪装当前登录用户。"
 
 msgid "If a metric is specified, sorting will be done based on the metric value"
-msgstr "如果指定了度量，则将根据该度量值进行排序"
+msgstr "如果指定了指标，则将根据指标值进行排序"
 
 msgid ""
 "If changes are made to your SQL query, columns in your dataset will be "
 "synced when saving the dataset."
-msgstr ""
+msgstr "如果对SQL查询进行了更改，在保存数据集时将同步数据集中的列。"
 
 msgid ""
 "If enabled, this control sorts the results/values descending, otherwise "
 "it sorts the results ascending."
-msgstr ""
+msgstr "如果启用，此控件将按降序对结果/值进行排序，否则按升序对结果进行排序。"
 
 #, fuzzy
 msgid "If table already exists"
-msgstr "标签已存在"
+msgstr "如果表已存在"
 
 #, fuzzy
 msgid "Ignore cache when generating report"
@@ -5964,11 +5973,11 @@ msgstr "索引"
 
 #, fuzzy
 msgid "Index column"
-msgstr "线段列"
+msgstr "索引列"
 
 #, fuzzy
 msgid "Index label"
-msgstr "范围标签"
+msgstr "索引标签"
 
 #, fuzzy, python-format
 msgid "Indexes (%s)"
@@ -5994,7 +6003,7 @@ msgstr "输入字段支持自定义。例如，30代表30°"
 
 #, fuzzy
 msgid "Insert Layer URL"
-msgstr "隐藏Layer"
+msgstr "插入图层URL"
 
 msgid "Insert Layer title"
 msgstr ""
@@ -6147,21 +6156,21 @@ msgstr "反转当前页"
 
 #, fuzzy
 msgid "Is active?"
-msgstr "激活邮件报告"
+msgstr "是否激活？"
 
 msgid "Is certified"
 msgstr "已认证"
 
 #, fuzzy
 msgid "Is custom tag"
-msgstr "自定义标签"
+msgstr "是自定义标签"
 
 msgid "Is dimension"
 msgstr "维度"
 
 #, fuzzy
 msgid "Is false"
-msgstr "禁用"
+msgstr "为假"
 
 msgid "Is favorite"
 msgstr "收藏"
@@ -6175,7 +6184,7 @@ msgstr "非空"
 
 #, fuzzy
 msgid "Is null"
-msgstr "是空"
+msgstr "为空"
 
 msgid "Is tagged"
 msgstr "有标签"
@@ -6276,11 +6285,11 @@ msgstr "表的键"
 
 #, fuzzy
 msgid "Kilometers"
-msgstr "千米"
+msgstr "公里"
 
 #, fuzzy
 msgid "LIMIT"
-msgstr "行限制"
+msgstr "限制"
 
 msgid "Label"
 msgstr "标签"
@@ -6294,7 +6303,7 @@ msgstr "标签线"
 
 #, fuzzy
 msgid "Label Template"
-msgstr "删除模板"
+msgstr "标签模板"
 
 msgid "Label Type"
 msgstr "标签类型"
@@ -6346,7 +6355,7 @@ msgstr "最后由 %s 更新 %s"
 
 #, fuzzy
 msgid "Last Value"
-msgstr "目标值"
+msgstr "最后值"
 
 #, python-format
 msgid "Last available value seen on %s"
@@ -6358,7 +6367,7 @@ msgstr "昨天"
 
 #, fuzzy
 msgid "Last login"
-msgstr "上一月"
+msgstr "最后登录"
 
 msgid "Last modified"
 msgstr "最后修改"
@@ -6369,11 +6378,11 @@ msgstr "上一月"
 
 #, fuzzy
 msgid "Last name"
-msgstr "数据集名称"
+msgstr "姓氏"
 
 #, fuzzy
 msgid "Last name is required"
-msgstr "需要名称"
+msgstr "姓氏是必需的"
 
 #, fuzzy
 msgid "Last quarter"
@@ -6392,7 +6401,7 @@ msgstr "上一年"
 
 #, fuzzy
 msgid "Lat"
-msgstr "扁平"
+msgstr "纬度"
 
 msgid "Latitude"
 msgstr "纬度"
@@ -9147,6 +9156,10 @@ msgid "SSH Tunnel could not be deleted."
 msgstr "SSH隧道无法被删除。"
 
 #, fuzzy
+msgid "Datasets could not be deleted."
+msgstr "数据集无法删除。"
+
+#, fuzzy
 msgid "SSH Tunnel could not be updated."
 msgstr "SSH隧道无法更新。"
 
@@ -9157,6 +9170,15 @@ msgstr "SSH隧道未找到"
 #, fuzzy
 msgid "SSH Tunnel parameters are invalid."
 msgstr "SSH隧道参数无效。"
+
+#, fuzzy
+msgid "It's not recommended to truncate axis in Bar chart."
+msgstr "不建议截断柱状图中的轴。"
+
+#, fuzzy
+msgid "JSON metadata is invalid!"
+msgstr "JSON元数据无效！"
+
 
 msgid "SSH Tunneling is not enabled"
 msgstr "SSH隧道未激活"
@@ -9532,6 +9554,10 @@ msgstr "选择一个要展示的指标。您可以使用聚合函数对列进行
 #, fuzzy
 msgid "Select a schema"
 msgstr "选择方案"
+
+#, fuzzy
+msgid "Default Schema"
+msgstr "默认模式"
 
 #, fuzzy
 msgid "Select a schema if the database supports this"
@@ -12873,6 +12899,10 @@ msgstr "自动匹配格式化"
 msgid "Visualization Type"
 msgstr "可视化类型"
 
+#, fuzzy
+msgid "Jinja templating"
+msgstr "Jinja模板"
+
 msgid ""
 "Visualize a parallel set of metrics across multiple groups. Each group is"
 " visualized using its own line of points and each metric is represented "
@@ -14139,7 +14169,11 @@ msgid "entries per page"
 msgstr "序列"
 
 #, fuzzy
-msgid "error"
+msgid "EMAIL_REPORTS_CTA"
+msgstr "邮件报告"
+
+#, fuzzy
+msgid "ERROR"
 msgstr "错误"
 
 msgid "error dark"
