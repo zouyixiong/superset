@@ -68,76 +68,79 @@ type DateRangePickerProps = {
 };
 
 // 预设快捷选项
-export const presetShortcuts = [
-  {
-    key: 'today',
-    label: t('Today'),
-    value: [dayjs().startOf('day'), dayjs().endOf('day')] as tDateRange,
-  },
-  {
-    key: 'yesterday',
-    label: t('Yesterday'),
-    value: [
-      dayjs().subtract(1, 'day').startOf('day'),
-      dayjs().subtract(1, 'day').endOf('day'),
-    ] as tDateRange,
-  },
-  {
-    key: 'dayBeforeYesterday',
-    label: t('Day before Yesterday'),
-    value: [
-      dayjs().subtract(2, 'day').startOf('day'),
-      dayjs().subtract(2, 'day').endOf('day'),
-    ] as tDateRange,
-  },
-  {
-    key: 'last7Days',
-    label: t('Last 7 days'),
-    value: [
-      dayjs().subtract(7, 'day').startOf('day'),
-      dayjs().endOf('day'),
-    ] as tDateRange,
-  },
-  {
-    key: 'thisWeek',
-    label: t('This week'),
-    value: [dayjs().startOf('week'), dayjs().endOf('day')] as tDateRange,
-  },
-  {
-    key: 'lastWeek',
-    label: t('Last week'),
-    value: [
-      dayjs().subtract(1, 'week').startOf('week'),
-      dayjs().subtract(1, 'week').endOf('week'),
-    ] as tDateRange,
-  },
-  {
-    key: 'thisMonth',
-    label: t('This month'),
-    value: [dayjs().startOf('month'), dayjs().endOf('day')] as tDateRange,
-  },
-  {
-    key: 'lastMonth',
-    label: t('Last month'),
-    value: [
-      dayjs().subtract(1, 'month').startOf('month'),
-      dayjs().subtract(1, 'month').endOf('month'),
-    ] as tDateRange,
-  },
-  {
-    key: 'thisQuarter',
-    label: t('This quarter'),
-    value: [dayjs().startOf('quarter'), dayjs().endOf('day')] as tDateRange,
-  },
-  {
-    key: 'lastQuarter',
-    label: t('Last quarter'),
-    value: [
-      dayjs().subtract(1, 'quarter').startOf('quarter'),
-      dayjs().subtract(1, 'quarter').endOf('quarter'),
-    ] as tDateRange,
-  },
-];
+// 用 const presetShortcuts = [...] 定义，可能导致翻译还没初始化好，翻译就失效了
+function getPresetShortcuts() {
+  return [
+    {
+      key: 'today',
+      label: t('Today'),
+      value: [dayjs().startOf('day'), dayjs().endOf('day')] as tDateRange,
+    },
+    {
+      key: 'yesterday',
+      label: t('Yesterday'),
+      value: [
+        dayjs().subtract(1, 'day').startOf('day'),
+        dayjs().subtract(1, 'day').endOf('day'),
+      ] as tDateRange,
+    },
+    {
+      key: 'dayBeforeYesterday',
+      label: t('Day before Yesterday'),
+      value: [
+        dayjs().subtract(2, 'day').startOf('day'),
+        dayjs().subtract(2, 'day').endOf('day'),
+      ] as tDateRange,
+    },
+    {
+      key: 'last7Days',
+      label: t('Last 7 Days'),
+      value: [
+        dayjs().subtract(7, 'day').startOf('day'),
+        dayjs().endOf('day'),
+      ] as tDateRange,
+    },
+    {
+      key: 'thisWeek',
+      label: t('This week'),
+      value: [dayjs().startOf('week'), dayjs().endOf('day')] as tDateRange,
+    },
+    {
+      key: 'lastWeek',
+      label: t('Last week'),
+      value: [
+        dayjs().subtract(1, 'week').startOf('week'),
+        dayjs().subtract(1, 'week').endOf('week'),
+      ] as tDateRange,
+    },
+    {
+      key: 'thisMonth',
+      label: t('This month'),
+      value: [dayjs().startOf('month'), dayjs().endOf('day')] as tDateRange,
+    },
+    {
+      key: 'lastMonth',
+      label: t('Last month'),
+      value: [
+        dayjs().subtract(1, 'month').startOf('month'),
+        dayjs().subtract(1, 'month').endOf('month'),
+      ] as tDateRange,
+    },
+    {
+      key: 'thisQuarter',
+      label: t('This quarter'),
+      value: [dayjs().startOf('quarter'), dayjs().endOf('day')] as tDateRange,
+    },
+    {
+      key: 'lastQuarter',
+      label: t('Last quarter'),
+      value: [
+        dayjs().subtract(1, 'quarter').startOf('quarter'),
+        dayjs().subtract(1, 'quarter').endOf('quarter'),
+      ] as tDateRange,
+    },
+  ];
+}
 
 export function getTimeRangeByKey(key: string = '') {
   if (!key) {
@@ -145,7 +148,7 @@ export function getTimeRangeByKey(key: string = '') {
   }
 
   const timerange = key.toLowerCase();
-  const shortcuts = presetShortcuts.filter(
+  const shortcuts = getPresetShortcuts().filter(
     shortcut => shortcut.key.toLowerCase() === timerange,
   );
   if (shortcuts.length > 0) {
@@ -219,7 +222,7 @@ export default function DateRangePicker({
         {showCustomPicker && (
           <div className="pop-div">
             <div className="preset-shortcuts">
-              {presetShortcuts.map((shortcut, index) => (
+              {getPresetShortcuts().map((shortcut, index) => (
                 <div
                   className="preset-shortcut"
                   key={index}

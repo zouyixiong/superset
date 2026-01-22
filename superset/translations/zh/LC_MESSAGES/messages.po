@@ -152,19 +152,19 @@ msgstr "不等于（!=）"
 
 #, fuzzy, python-format
 msgid "% calculation"
-msgstr "% 计算"
+msgstr "%c 计算"
 
 #, fuzzy, python-format
 msgid "% of parent"
-msgstr "父类"
+msgstr "% of parent"
 
 #, fuzzy, python-format
 msgid "% of total"
-msgstr "显示总计"
+msgstr "% of total"
 
 #, python-format
 msgid "%(dialect)s cannot be used as a data source for security reasons."
-msgstr "出于安全原因，%(dialect)s SQLite数据库不能用作数据源。"
+msgstr "出于安全原因，%(dialect)s 不能用作数据源。"
 
 #, python-format
 msgid "%(label)s file"
@@ -279,12 +279,13 @@ msgstr "%s 个选项"
 
 #, fuzzy, python-format
 msgid "%s recipients"
-msgstr "最近"
+msgstr "%s 个收件人"
 
 #, fuzzy, python-format
 msgid "%s row"
 msgid_plural "%s rows"
 msgstr[0] "%s 行"
+msgstr[1] "%s 行"
 
 #, python-format
 msgid "%s saved metric(s)"
@@ -1175,7 +1176,7 @@ msgstr "所有"
 
 #, fuzzy, python-format
 msgid "All %s hidden columns"
-msgstr "表的列"
+msgstr "所有 %s 个隐藏列"
 
 msgid "All Text"
 msgstr "所有文本"
@@ -1624,11 +1625,11 @@ msgstr "应用的过滤器 (%d)"
 
 #, fuzzy, python-format
 msgid "Applied filters (%s)"
-msgstr "应用的过滤器 (%d)"
+msgstr "应用的过滤器 (%s)"
 
 #, fuzzy, python-format
 msgid "Applied filters: %s"
-msgstr "应用的过滤器 (%s)"
+msgstr "应用的过滤器: %s"
 
 msgid ""
 "Applied rolling window did not return any data. Please make sure the "
@@ -3612,7 +3613,7 @@ msgstr "无法从结果后端检索数据。您需要重新运行原始查询。
 
 #, fuzzy, python-format
 msgid "Data for %s"
-msgstr "给JS的额外数据"
+msgstr "%s 的数据"
 
 #, fuzzy
 msgid "Data imported"
@@ -3726,7 +3727,7 @@ msgstr "数据集"
 
 #, fuzzy, python-format
 msgid "Dataset %(table)s already exists"
-msgstr "数据集 %(name)s 已存在"
+msgstr "数据集 %(table)s 已存在"
 
 #, fuzzy
 msgid "Dataset Name"
@@ -4466,9 +4467,11 @@ msgstr "复制"
 
 #, fuzzy, python-format
 msgid "Duplicate role %(name)s"
-msgstr "重复的列名%(columns)s"
+msgstr "重复的角色 %(name)s"
 
 msgid "Duplicate tab"
+
+
 msgstr "复制选项卡"
 
 msgid "Duration"
@@ -5943,7 +5946,7 @@ msgstr "描述要发送给你的报告"
 
 #, fuzzy, python-format
 msgid "Include description to be sent with %s"
-msgstr "描述要发送给你的报告"
+msgstr "包含要随 %s 发送的描述"
 
 msgid "Include series name as an axis"
 msgstr "包括系列名称作为轴"
@@ -9379,7 +9382,7 @@ msgstr "搜索"
 
 #, fuzzy, python-format
 msgid "Search %s records"
-msgstr "原始记录"
+msgstr "搜索 %s 条记录"
 
 msgid "Search / Filter"
 msgstr "搜索 / 过滤"
@@ -9899,7 +9902,7 @@ msgstr "显示"
 
 #, fuzzy, python-format
 msgid "Show %s entries"
-msgstr "显示指标"
+msgstr "显示 %s 条目"
 
 msgid "Show Bubbles"
 msgstr "显示气泡"
@@ -10645,7 +10648,8 @@ msgstr "表名"
 msgid ""
 "Table [%(table)s] could not be found, please double check your database "
 "connection, schema, and table name"
-msgstr "找不到 [%(table_name)s] 表，请仔细检查您的数据库连接、Schema 和 表名"
+msgstr ""
+"表 [%(table)s] 未找到，请仔细检查您的数据库连接、schema 和表名"
 
 #, fuzzy
 msgid "Table actions"
@@ -12954,7 +12958,7 @@ msgstr ""
 
 #, fuzzy, python-format
 msgid "Waiting on %s"
-msgstr "显示 %s个 总计 %s个"
+msgstr "等待 %s"
 
 #, fuzzy
 msgid "Waiting on database..."
@@ -14238,14 +14242,15 @@ msgid ""
 " Lab tabs using this database open. Are you sure you want to continue? "
 "Deleting the database will break those objects."
 msgstr ""
-"数据库 %s 已经关联了 %s 图表和 %s 看板，并且用户在该数据库上打开了 %s 个 SQL "
-"编辑器选项卡。确定要继续吗？删除数据库将破坏这些对象。"
+"链接到出现在 %s 个看板上的 %s 个图表，且用户有 %s 个SQL实验室标签页正在使用此数据库。"
+"您确定要继续吗？删除数据库将破坏这些对象。"
 
 #, fuzzy, python-format
 msgid ""
 "is linked to %s charts that appear on %s dashboards. Are you sure you "
 "want to continue? Deleting the dataset will break those objects."
-msgstr "数据集 %s 已经链接到 %s 图表和 %s 看板内。确定要继续吗？删除数据集将破坏这些对象。"
+msgstr ""
+"链接到出现在 %s 个看板上的 %s 个图表。您确定要继续吗？删除数据集将破坏这些对象。"
 
 msgid "is not"
 msgstr ""
@@ -14628,3 +14633,33 @@ msgstr "缩放面积"
 
 msgid "© Layer attribution"
 msgstr ""
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Yesterday"
+msgstr "昨天"
+
+msgid "Day before Yesterday"
+msgstr "前天"
+
+msgid "Last 7 Days"
+msgstr "最近7天"
+
+msgid "This week"
+msgstr "本周"
+
+msgid "Last week"
+msgstr "上周"
+
+msgid "This month"
+msgstr "本月"
+
+msgid "Last month"
+msgstr "上月"
+
+msgid "This quarter"
+msgstr "本季度"
+
+msgid "Last quarter"
+msgstr "上季度"
