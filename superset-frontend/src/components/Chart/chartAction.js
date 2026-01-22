@@ -37,7 +37,7 @@ import {
 import { addDangerToast } from 'src/components/MessageToasts/actions';
 import { logEvent } from 'src/logger/actions';
 import { Logger, LOG_ACTIONS_LOAD_CHART } from 'src/logger/LogUtils';
-import { allowCrossDomain as domainShardingEnabled } from 'src/utils/hostNamesConfig';
+import { domainShardingEnabled } from 'src/utils/hostNamesConfig';
 import { updateDataMask } from 'src/dataMask/actions';
 import { waitForAsyncData } from 'src/middleware/asyncEvent';
 import { ensureAppRoot } from 'src/utils/pathUtils';
@@ -125,7 +125,7 @@ const legacyChartDataRequest = async (
   const endpointType = getLegacyEndpointType({ resultFormat, resultType });
   const allowDomainSharding =
     // eslint-disable-next-line camelcase
-    domainShardingEnabled && requestParams?.dashboard_id;
+    domainShardingEnabled() && requestParams?.dashboard_id;
   const url = getExploreUrl({
     formData,
     endpointType,
@@ -183,7 +183,7 @@ const v1ChartDataRequest = async (
 
   const allowDomainSharding =
     // eslint-disable-next-line camelcase
-    domainShardingEnabled && requestParams?.dashboard_id;
+    domainShardingEnabled() && requestParams?.dashboard_id;
   const url = getChartDataUri({
     path: '/api/v1/chart/data',
     qs,
@@ -215,7 +215,7 @@ export async function getChartDataRequest({
     ...requestParams,
   };
 
-  if (domainShardingEnabled) {
+  if (domainShardingEnabled()) {
     querySettings = {
       ...querySettings,
       mode: 'cors',

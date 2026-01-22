@@ -43,6 +43,10 @@ export const URL_PARAMS = {
     name: 'time_range',
     type: 'string',
   },
+  locale: {
+    name: 'locale',
+    type: 'string',
+  },
   nativeFiltersKey: {
     name: 'native_filters_key',
     type: 'string',

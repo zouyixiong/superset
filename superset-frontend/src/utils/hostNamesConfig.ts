@@ -51,6 +51,19 @@ function getDomainsConfig(): string[] {
   return Array.from(availableDomains);
 }
 
-export const availableDomains: string[] = getDomainsConfig();
+// 可能引起循环引用，导致 getBootstrapData 中的 cachedBootstrapData 未定义先使用错误
+// export const availableDomains: string[] = getDomainsConfig();
+// export const allowCrossDomain: boolean = availableDomains.length > 1;
 
-export const allowCrossDomain: boolean = availableDomains.length > 1;
+let cachedDomains: string[] | null = null;
+export function availableDomains(): string[] {
+  if (cachedDomains !== null) {
+    return cachedDomains;
+  }
+  cachedDomains = getDomainsConfig();
+  return cachedDomains;
+}
+
+export function domainShardingEnabled() {
+  return availableDomains().length > 1;
+}

@@ -48,8 +48,9 @@ export function getChartKey(explore) {
 let requestCounter = 0;
 export function getHostName(allowDomainSharding = false) {
   let currentIndex = 0;
+  const domains = availableDomains();
   if (allowDomainSharding) {
-    currentIndex = requestCounter % availableDomains.length;
+    currentIndex = requestCounter % domains.length;
     requestCounter += 1;
 
     // if domain sharding is enabled, skip main domain for fetching chart API
@@ -60,7 +61,7 @@ export function getHostName(allowDomainSharding = false) {
       requestCounter += 1;
     }
   }
-  return availableDomains[currentIndex];
+  return domains[currentIndex];
 }
 
 export function getAnnotationJsonUrl(slice_id, force) {

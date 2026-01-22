@@ -17,7 +17,9 @@
  * under the License.
  */
 import { BootstrapData } from 'src/types/bootstrapTypes';
-import { DEFAULT_BOOTSTRAP_DATA } from 'src/constants';
+import { DEFAULT_BOOTSTRAP_DATA, URL_PARAMS } from 'src/constants';
+import { getUrlParam } from 'src/utils/urlUtils';
+import type { Locale } from '@superset-ui/core';
 
 let cachedBootstrapData: BootstrapData | null = null;
 
@@ -28,7 +30,20 @@ export default function getBootstrapData(): BootstrapData {
     cachedBootstrapData = dataBootstrap
       ? JSON.parse(dataBootstrap)
       : DEFAULT_BOOTSTRAP_DATA;
+
+    // support URL params to control locale, use in embeded mode
+    const locale = getUrlParam(URL_PARAMS.locale) as Locale;
+    if (cachedBootstrapData && locale) {
+      cachedBootstrapData.common.locale = locale;
+      if (
+        cachedBootstrapData.common.language_pack?.locale_data?.superset?.['']
+      ) {
+        cachedBootstrapData.common.language_pack.locale_data.superset[''].lang =
+          locale;
+      }
+    }
   }
+
   // Add a fallback to ensure the returned value is always of type BootstrapData
   return cachedBootstrapData ?? DEFAULT_BOOTSTRAP_DATA;
 }
