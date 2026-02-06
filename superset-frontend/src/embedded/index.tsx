@@ -17,6 +17,7 @@
  * under the License.
  */
 import 'src/public-path';
+import 'core-js/stable';
 
 import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom';
