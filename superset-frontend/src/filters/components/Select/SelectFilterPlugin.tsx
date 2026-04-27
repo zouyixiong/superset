@@ -370,7 +370,7 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
 
     // Cascade cleanup: when parent filter changes, child data updates.
     // Filter out any selected values that are no longer in the new data.
-    if (hasDataChanged && hasInitializedRef.current && col && data?.length > 0) {
+    if (hasDataChanged && hasInitializedRef.current && col && data.length > 0) {
       const validValues = new Set(data.map(row => row[col]));
       const currentValues = ensureIsArray(filterState.value);
       const remaining = currentValues.filter((v: any) => validValues.has(v));
@@ -378,28 +378,31 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
       if (remaining.length < currentValues.length) {
         // Some values became invalid — apply cleaned-up state and return
         // early to avoid default-value logic below.
-        if (remaining.length > 0) {
+        if (remaining.length > 0 && bindCol) {
           // Map bindColumn → displayName for remaining values (backward compat)
-          if (bindCol) {
-            const valueToDisplayName = new Map<string, string>();
-            data.forEach(row => {
-              const bindVal = row[bindCol];
-              const displayVal = row[col];
-              if (bindVal !== undefined && displayVal !== undefined) {
-                valueToDisplayName.set(`${bindVal}`, `${displayVal}`);
+          const valueToDisplayName = new Map<string, string>();
+          data.forEach(row => {
+            const bindVal = row[bindCol];
+            const displayVal = row[col];
+            if (bindVal !== undefined && displayVal !== undefined) {
+              valueToDisplayName.set(`${bindVal}`, `${displayVal}`);
+            }
+          });
+          if (valueToDisplayName.size > 0) {
+            const mappedRemaining: (string | number | null)[] = [];
+            remaining.forEach((v: any) => {
+              const strV = `${v}`;
+              if (valueToDisplayName.has(strV)) {
+                mappedRemaining.push(valueToDisplayName.get(strV)!);
+              } else {
+                mappedRemaining.push(strV);
               }
             });
-            if (valueToDisplayName.size > 0) {
-              const mappedRemaining = remaining.map((v: any) => {
-                const strV = `${v}`;
-                return valueToDisplayName.has(strV) ? valueToDisplayName.get(strV) : strV;
-              });
-              updateDataMask(mappedRemaining);
-              prevDataRef.current = data;
-              isChangedByUser.current = false;
-              return;
-            }
+            updateDataMask(mappedRemaining);
+          } else {
+            updateDataMask(remaining);
           }
+        } else if (remaining.length > 0) {
           updateDataMask(remaining);
         } else {
           updateDataMask(null);
