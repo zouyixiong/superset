@@ -29,6 +29,7 @@ from typing import Any, Callable, cast, Literal, TYPE_CHECKING
 from flask import g, has_request_context, request
 from flask_appbuilder.const import API_URI_RIS_KEY
 from sqlalchemy.exc import SQLAlchemyError
+from werkzeug.local import LocalProxy
 
 from superset.extensions import stats_logger_manager
 from superset.utils import json
@@ -197,8 +198,14 @@ class AbstractEventLogger(ABC):
             try:
                 actual_user = g.get("user", None)
                 if actual_user is not None:
-                    db.session.add(actual_user)
-                    user_id = get_user_id()
+                    # Skip LocalProxy objects that can't be added to the session
+                    # This happens in embedded mode where auth returns proxies
+                    if isinstance(actual_user, LocalProxy):
+                        actual_user = actual_user._get_current_object()
+                    # Only add if it's a proper SQLAlchemy model
+                    if actual_user is not None and hasattr(actual_user, "__tablename__"):
+                        db.session.add(actual_user)
+                        user_id = get_user_id()
             except Exception as ex:
                 logging.warning("Failed to add user to db session: %s", ex)
                 user_id = None
