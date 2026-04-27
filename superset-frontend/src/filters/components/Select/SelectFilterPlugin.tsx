@@ -114,7 +114,7 @@ const orientationMap = new Map<string, FilterBarOrientation>();
 export default function PluginFilterSelect(props: PluginFilterSelectProps) {
   const {
     coltypeMap,
-    data,
+    data: rawData,
     filterState,
     formData,
     height,
@@ -144,6 +144,9 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
     searchAllOptions,
   } = formData;
 
+  // Guard against null data from parent component
+  const data = rawData ?? [];
+
   const groupby = useMemo(
     () => ensureIsArray(formData.groupby).map(getColumnLabel),
     [formData.groupby],
@@ -156,7 +159,7 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
   const [initialColtypeMap] = useState(coltypeMap);
   const [search, setSearch] = useState('');
   const isChangedByUser = useRef(false);
-  const prevDataRef = useRef(data);
+  const prevDataRef = useRef(data ?? []);
   const [dataMask, dispatchDataMask] = useImmerReducer(reducer, {
     extraFormData: {},
     filterState,
@@ -284,7 +287,7 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
   );
 
   const placeholderText =
-    data.length === 0
+    !data || data.length === 0
       ? t('No data')
       : tn('%s option', '%s options', data.length, data.length);
 
@@ -300,7 +303,7 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
   }, [filterState.validateMessage, filterState.validateStatus]);
 
   const uniqueOptions = useMemo(() => {
-    const allOptions = new Set(data.map(el => el[col]));
+    const allOptions = new Set((data || []).map(el => el[col]));
     return [...allOptions].map((value: string) => ({
       label: labelFormatter(value, datatype),
       value,
@@ -337,28 +340,91 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
     [formData.sortAscending, formData.sortMetric],
   );
 
-  // Use effect for initialisation for filter plugin
-  // this should run only once when filter is configured & saved
-  // & shouldnt run when the component is remounted on change of
-  // orientation of filter bar
+  // Single effect: handles initialization + cascade cleanup + defaults.
+  // All cascade-aware filtering happens here to avoid race conditions
+  // between multiple effects dispatching conflicting state updates.
+  const hasInitializedRef = useRef(false);
+
   useEffect(() => {
-    // Skip if only orientation changed
     if (hasOnlyOrientationChanged.current) {
       return;
     }
 
-    // Case 1: Handle disabled state first
     if (isDisabled) {
       updateDataMask(null);
       return;
     }
 
-    if (filterState.value !== undefined) {
-      // Map bindColumn values back to displayName values for correct dropdown display.
-      // This handles backward compatibility for data saved before the displayName fix,
-      // where filterState.value was incorrectly stored as bindColumn values.
+    // Detect actual data changes (for cascade cleanup).
+    const safeData = data ?? [];
+    const safePrev = prevDataRef.current ?? [];
+    const hasDataChanged =
+      safePrev.length !== safeData.length ||
+      safePrev.some((row, i) => {
+        const prevVal = row?.[col];
+        const currVal = safeData?.[i]?.[col];
+        return typeof prevVal === 'bigint' || typeof currVal === 'bigint'
+          ? prevVal?.toString() !== currVal?.toString()
+          : prevVal !== currVal;
+      });
+
+    // Cascade cleanup: when parent filter changes, child data updates.
+    // Filter out any selected values that are no longer in the new data.
+    if (hasDataChanged && hasInitializedRef.current && col && data?.length > 0) {
+      const validValues = new Set(data.map(row => row[col]));
+      const currentValues = ensureIsArray(filterState.value);
+      const remaining = currentValues.filter((v: any) => validValues.has(v));
+
+      if (remaining.length < currentValues.length) {
+        // Some values became invalid — apply cleaned-up state and return
+        // early to avoid default-value logic below.
+        if (remaining.length > 0) {
+          // Map bindColumn → displayName for remaining values (backward compat)
+          if (bindCol) {
+            const valueToDisplayName = new Map<string, string>();
+            data.forEach(row => {
+              const bindVal = row[bindCol];
+              const displayVal = row[col];
+              if (bindVal !== undefined && displayVal !== undefined) {
+                valueToDisplayName.set(`${bindVal}`, `${displayVal}`);
+              }
+            });
+            if (valueToDisplayName.size > 0) {
+              const mappedRemaining = remaining.map((v: any) => {
+                const strV = `${v}`;
+                return valueToDisplayName.has(strV) ? valueToDisplayName.get(strV) : strV;
+              });
+              updateDataMask(mappedRemaining);
+              prevDataRef.current = data;
+              isChangedByUser.current = false;
+              return;
+            }
+          }
+          updateDataMask(remaining);
+        } else {
+          updateDataMask(null);
+        }
+        prevDataRef.current = data;
+        isChangedByUser.current = false;
+        return;
+      }
+    }
+
+    let valueToApply: SelectValue | null | undefined;
+
+    if (filterState.value != null) {
       let mappedValue = filterState.value;
-      if (bindCol && col && data?.length > 0) {
+
+      // Filter out stale values
+      if (col && data?.length > 0) {
+        mappedValue = ensureIsArray(filterState.value).filter((v: any) => {
+          const validValues = new Set(data.map(row => row[col]));
+          return validValues.has(v);
+        });
+      }
+
+      // Map bindColumn → displayName (backward compat)
+      if (mappedValue.length && bindCol && data?.length > 0) {
         const valueToDisplayName = new Map<string, string>();
         data.forEach(row => {
           const bindVal = row[bindCol];
@@ -368,7 +434,7 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
           }
         });
         if (valueToDisplayName.size > 0) {
-          mappedValue = ensureIsArray(filterState.value).map((v: any) => {
+          mappedValue = ensureIsArray(mappedValue).map((v: any) => {
             const strV = `${v}`;
             if (valueToDisplayName.has(strV)) {
               return valueToDisplayName.get(strV);
@@ -377,28 +443,31 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
           });
         }
       }
-      // Set the filter state value if it is defined
-      updateDataMask(mappedValue);
-      return;
+
+      if (mappedValue.length) {
+        valueToApply = mappedValue;
+      }
+      if (mappedValue.length === 0 && data?.length > 0) {
+        valueToApply = null;
+      }
     }
 
-    // Handle the default to first Value case
-    // Skip default values when clearAllTrigger is active to prevent
-    // defaults from being applied during Clear All operation
-    if (!clearAllTrigger) {
+    if (valueToApply !== undefined) {
+      updateDataMask(valueToApply);
+    } else if (!clearAllTrigger && data?.length > 0) {
       if (defaultToFirstItem) {
-        // Set to first item if defaultToFirstItem is true
-        const firstItem: SelectValue = data[0]
-          ? (groupby.map(col => data[0][col]) as string[])
-          : null;
+        const firstItem: SelectValue = groupby.map(gb => data[0][gb]) as string[];
         if (firstItem?.[0] !== undefined) {
           updateDataMask(firstItem);
         }
       } else if (formData?.defaultValue) {
-        // Handle defalut value case
         updateDataMask(formData.defaultValue);
       }
     }
+
+    prevDataRef.current = data;
+    hasInitializedRef.current = true;
+    isChangedByUser.current = false;
   }, [
     isDisabled,
     enableEmptyFilter,
@@ -410,80 +479,8 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
     bindCol,
     inverseSelection,
     clearAllTrigger,
-  ]);
-
-  useEffect(() => {
-    const prev = prevDataRef.current;
-    const curr = data;
-
-    const hasDataChanged =
-      prev?.length !== curr?.length ||
-      prev?.some((row, i) => {
-        const prevVal = row[col];
-        const currVal = curr[i][col];
-        return typeof prevVal === 'bigint' || typeof currVal === 'bigint'
-          ? prevVal?.toString() !== currVal?.toString()
-          : prevVal !== currVal;
-      });
-
-    // If data actually changed (e.g., due to parent filter), reset flag
-    if (hasDataChanged) {
-      isChangedByUser.current = false;
-      prevDataRef.current = data;
-    }
-  }, [data, col]);
-
-  // Clear invalid filter values when data changes due to parent cascade.
-  // When a parent filter changes, the child's options refresh. Any previously
-  // selected values that are no longer in the new data should be removed.
-  useEffect(() => {
-    if (!filterState.value?.length || !data?.length) return;
-
-    const validValues = new Set(data.map(row => row[col]));
-    const invalidValues = filterState.value.filter(
-      (v: any) => !validValues.has(v),
-    );
-    if (!invalidValues.length) return;
-
-    const remainingValues = filterState.value.filter((v: any) =>
-      validValues.has(v),
-    );
-    updateDataMask(remainingValues.length ? remainingValues : null);
-  }, [data, col, JSON.stringify(filterState.value), updateDataMask]);
-
-  useEffect(() => {
-    if (
-      isChangedByUser.current &&
-      filterState.value?.every((value?: any) =>
-        data.some(row => row[col] === value),
-      )
-    )
-      return;
-
-    const firstItem: SelectValue = data[0]
-      ? (groupby.map(col => data[0][col]) as string[])
-      : null;
-
-    // Skip default value update when clearAllTrigger is active
-    if (
-      !clearAllTrigger &&
-      defaultToFirstItem &&
-      Object.keys(formData?.extraFormData || {}).length &&
-      filterState.value !== undefined &&
-      firstItem !== null &&
-      filterState.value !== firstItem
-    ) {
-      if (firstItem?.[0] !== undefined) {
-        updateDataMask(firstItem);
-      }
-    }
-  }, [
-    defaultToFirstItem,
+    filterState.value,
     updateDataMask,
-    formData,
-    data,
-    JSON.stringify(filterState.value),
-    clearAllTrigger,
   ]);
 
   useEffect(() => {
