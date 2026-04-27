@@ -1,4 +1,5 @@
 /**
+/**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -306,7 +307,9 @@ const FilterValue: FC<FilterControlProps> = ({
       const bindColumn = filter.targets?.[0].column?.name;
       const s0 = state[0];
 
-      // map to dataMask to bind for charts
+      // Map displayName values to bindColumn values only for extraFormData
+      // sent to the chart. Keep filterState.value as displayName values so
+      // the Select dropdown can match them to its options for display.
       if (selectValues && bindColumn && displayName && s0?.data) {
         const _values: string[] = [];
         for (const sVal of selectValues) {
@@ -330,12 +333,6 @@ const FilterValue: FC<FilterControlProps> = ({
             filters: [_filter, ...othFilters],
           };
         }
-
-        _dataMask.filterState = {
-          ..._dataMask.filterState,
-          value: _values,
-          label: _values.join(','),
-        };
       }
 
       onFilterSelectionChange(filter, {

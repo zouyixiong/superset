@@ -149,6 +149,10 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
     [formData.groupby],
   );
   const [col] = groupby;
+  const bindCol = useMemo(
+    () => ensureIsArray(formData.groupby)[1] as string | undefined,
+    [formData.groupby],
+  );
   const [initialColtypeMap] = useState(coltypeMap);
   const [search, setSearch] = useState('');
   const isChangedByUser = useRef(false);
@@ -350,8 +354,31 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
     }
 
     if (filterState.value !== undefined) {
+      // Map bindColumn values back to displayName values for correct dropdown display.
+      // This handles backward compatibility for data saved before the displayName fix,
+      // where filterState.value was incorrectly stored as bindColumn values.
+      let mappedValue = filterState.value;
+      if (bindCol && col && data?.length > 0) {
+        const valueToDisplayName = new Map<string, string>();
+        data.forEach(row => {
+          const bindVal = row[bindCol];
+          const displayVal = row[col];
+          if (bindVal !== undefined && displayVal !== undefined) {
+            valueToDisplayName.set(`${bindVal}`, `${displayVal}`);
+          }
+        });
+        if (valueToDisplayName.size > 0) {
+          mappedValue = ensureIsArray(filterState.value).map((v: any) => {
+            const strV = `${v}`;
+            if (valueToDisplayName.has(strV)) {
+              return valueToDisplayName.get(strV);
+            }
+            return strV;
+          });
+        }
+      }
       // Set the filter state value if it is defined
-      updateDataMask(filterState.value);
+      updateDataMask(mappedValue);
       return;
     }
 
@@ -380,6 +407,7 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
     data,
     groupby,
     col,
+    bindCol,
     inverseSelection,
     clearAllTrigger,
   ]);
