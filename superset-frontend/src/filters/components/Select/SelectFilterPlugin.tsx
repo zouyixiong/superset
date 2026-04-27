@@ -433,6 +433,24 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
     }
   }, [data, col]);
 
+  // Clear invalid filter values when data changes due to parent cascade.
+  // When a parent filter changes, the child's options refresh. Any previously
+  // selected values that are no longer in the new data should be removed.
+  useEffect(() => {
+    if (!filterState.value?.length || !data?.length) return;
+
+    const validValues = new Set(data.map(row => row[col]));
+    const invalidValues = filterState.value.filter(
+      (v: any) => !validValues.has(v),
+    );
+    if (!invalidValues.length) return;
+
+    const remainingValues = filterState.value.filter((v: any) =>
+      validValues.has(v),
+    );
+    updateDataMask(remainingValues.length ? remainingValues : null);
+  }, [data, col, JSON.stringify(filterState.value), updateDataMask]);
+
   useEffect(() => {
     if (
       isChangedByUser.current &&
